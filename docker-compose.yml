@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:14.4-alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres:/pg
+    environment:
+      - POSTGRES_DB=products
+      - POSTGRES_USER=products
+      - POSTGRES_PASSWORD=products
+    restart: always
+  app:
+    image: java-gradle:db
+    depends_on:
+      - postgres
+    network_mode: host
+    restart: always
